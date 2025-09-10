@@ -46,29 +46,30 @@ INSERT INTO materia (nombre, horas_semana) VALUES
 ('Arquitectura', 3),
 ('SistemasOperativos', 3);
 
-INSERT INTO grupo (clave_grupo, id_materia, matricula_maestro) VALUES
-('T1A1', 1, 'M001'),
-('T102', 2, 'M002'),
-('T1D3', 3, 'M003'),
-('T14A', 4, 'M004'),
-('T105', 5, 'M005'),
-('T106', 6, 'M006'),
-('T157', 7, 'M007'),
-('T108', 8, 'M008'),
-('T1A9', 9, 'M009'),
-('T110', 10, 'M010');
+INSERT INTO grupo (clave_grupo, id_materia, matricula_maestro, periodo, seccion, nombre_grupo) VALUES
+('T1A1', 1, 'M001', '2025-1', 1, 'Grupo 1'),
+('T102', 2, 'M002', '2025-1', 1, 'Grupo 2'),
+('T1D3', 3, 'M003', '2025-1', 2, 'Grupo 3'),
+('T14A', 4, 'M004', '2025-1', 2, 'Grupo 4'),
+('T105', 5, 'M005', '2025-1', 3, 'Grupo 5'),
+('T106', 6, 'M006', '2025-1', 3, 'Grupo 6'),
+('T157', 7, 'M007', '2025-1', 4, 'Grupo 7'),
+('T108', 8, 'M008', '2025-1', 4, 'Grupo 8'),
+('T1A9', 9, 'M009', '2025-1', 5, 'Grupo 9'),
+('T110', 10,'M010','2025-1', 5, 'Grupo 10');
 
-INSERT INTO asistencia (fecha_asistencia, matricula_alumno, id_grupo, presente) VALUES
-('2025-09-01 08:01:00', '183001', 1, TRUE),
-('2025-09-01 08:06:00', '183002', 1, FALSE),
-('2025-09-01 08:10:00', '183003', 2, TRUE),
-('2025-09-01 08:05:00', '183004', 2, TRUE),
-('2025-09-01 08:02:00', '183005', 3, FALSE),
-('2025-09-01 08:02:10', '183006', 3, TRUE),
-('2025-09-01 08:10:01', '183007', 4, FALSE),
-('2025-09-01 08:40:00', '183008', 5, TRUE),
-('2025-09-01 08:30:00', '183009', 6, TRUE),
-('2025-09-01 08:00:30', '183010', 7, FALSE);
+INSERT INTO asistencia (fecha_asistencia, matricula_alumno, id_grupo, presente, periodo, seccion) VALUES
+('2025-09-01 08:01:00', '183001', 1, TRUE, '2025-1', 1),
+('2025-09-01 08:06:00', '183002', 1, FALSE,'2025-1', 1),
+('2025-09-01 08:10:00', '183003', 2, TRUE, '2025-1', 1),
+('2025-09-01 08:05:00', '183004', 2, TRUE, '2025-1', 1),
+('2025-09-01 08:02:00', '183005', 3, FALSE,'2025-1', 2),
+('2025-09-01 08:02:10', '183006', 3, TRUE, '2025-1', 2),
+('2025-09-01 08:10:01', '183007', 4, FALSE,'2025-1', 2),
+('2025-09-01 08:40:00', '183008', 5, TRUE, '2025-1', 3),
+('2025-09-01 08:30:00', '183009', 6, TRUE, '2025-1', 3),
+('2025-09-01 08:00:30', '183010', 7, FALSE,'2025-1', 4);
+
 
 INSERT INTO inscripcion (id_seccion, matricula_alumno, id_grupo, fecha_inscripcion) VALUES
 (1, '183001', 1, '2025-01-15 09:00:00'),
