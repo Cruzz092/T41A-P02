@@ -1,57 +1,42 @@
-CREATE TABLE maestro(
-  matricula_maestro VARCHAR(10) PRIMARY KEY,
-  nombre VARCHAR(50) NOT NULL
+CREATE TABLE alumnos (
+    matricula VARCHAR(20) PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE alumno(
-  matricula_alumno VARCHAR(10) PRIMARY KEY,
-  nombre VARCHAR(50) NOT NULL
+CREATE TABLE maestros (
+    id_maestro SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE seccion(
-  id_seccion SERIAL PRIMARY KEY,
-  anio INTEGER NOT NULL,
-  seccion NUMERIC(1) NOT NULL
+CREATE TABLE grupos (
+    periodo VARCHAR(10) NOT NULL,
+    seccion VARCHAR(10) NOT NULL,
+    nombre_grupo VARCHAR(50) NOT NULL,
+    id_maestro INTEGER NOT NULL,
+    clave_grupo VARCHAR(10),       -- tu campo extra
+    id_materia INT,                -- tu campo extra
+    PRIMARY KEY (periodo, seccion),
+    FOREIGN KEY (id_maestro) REFERENCES maestros(id_maestro)
 );
 
-CREATE TABLE materia(
-  id_materia SERIAL PRIMARY KEY,
-  nombre VARCHAR(50) NOT NULL,
-  horas_semana INTEGER NOT NULL
+CREATE TABLE inscripciones (
+    matricula VARCHAR(20) NOT NULL,
+    periodo VARCHAR(10) NOT NULL,
+    seccion VARCHAR(10) NOT NULL,
+    fecha_inscripcion DATE NOT NULL,
+    FOREIGN KEY (matricula) REFERENCES alumnos(matricula),
+    FOREIGN KEY (periodo, seccion) REFERENCES grupos(periodo, seccion),
+    PRIMARY KEY (matricula, periodo, seccion)
 );
 
-CREATE TABLE grupo(
-  id_grupo SERIAL PRIMARY KEY,
-  clave_grupo VARCHAR(10) NOT NULL,
-  id_materia INT NOT NULL,
-  matricula_maestro VARCHAR(10) NOT NULL,
-  periodo VARCHAR(10) NOT NULL,       -- lee agrege este campo para que me acepte el 3ro xd
-  seccion NUMERIC(1) NOT NULL,        -- este tambien
-  nombre_grupo VARCHAR(50) NOT NULL,  -- y este
-  FOREIGN KEY(id_materia) REFERENCES materia(id_materia),
-  FOREIGN KEY(matricula_maestro) REFERENCES maestro(matricula_maestro)
+CREATE TABLE asistencia (
+    matricula VARCHAR(20) NOT NULL,
+    periodo VARCHAR(10) NOT NULL,
+    seccion VARCHAR(10) NOT NULL,
+    fecha_hora TIMESTAMP NOT NULL,
+    presente BOOLEAN NOT NULL,
+    id_grupo INT,                  -- tu campo extra
+    FOREIGN KEY (matricula) REFERENCES alumnos(matricula),
+    FOREIGN KEY (periodo, seccion) REFERENCES grupos(periodo, seccion),
+    PRIMARY KEY (matricula, periodo, seccion, fecha_hora)
 );
-
-CREATE TABLE asistencia(
-  id_asistencia SERIAL PRIMARY KEY,
-  fecha_asistencia TIMESTAMP NOT NULL,
-  matricula_alumno VARCHAR(10) NOT NULL,
-  id_grupo INT NOT NULL,
-  presente BOOLEAN NOT NULL,
-  periodo VARCHAR(10) NOT NULL,   -- este es nuevo tambien para que agarre
-  seccion NUMERIC(1) NOT NULL,    -- otro igual nuevo
-  FOREIGN KEY(matricula_alumno) REFERENCES alumno(matricula_alumno),
-  FOREIGN KEY(id_grupo) REFERENCES grupo(id_grupo)
-);
-
-CREATE TABLE inscripcion(
-  id_inscripcion SERIAL PRIMARY KEY,
-  id_seccion INT NOT NULL,
-  FOREIGN KEY(id_seccion) REFERENCES seccion(id_seccion),
-  matricula_alumno VARCHAR(10) NOT NULL,
-  FOREIGN KEY(matricula_alumno) REFERENCES alumno(matricula_alumno),
-  id_grupo INT NOT NULL,
-  FOREIGN KEY(id_grupo) REFERENCES grupo(id_grupo),
-  fecha_inscripcion TIMESTAMP NOT NULL
-);
-
